@@ -1,8 +1,0 @@
-# Configuration template file used by rpi23-gen-image.sh
-RELEASE=jessie
-ENABLE_I2C=true
-ENABLE_SPI=true
-ENABLE_SSHD=true
-TIMEZONE=Europe/Prague
-ENABLE_SALT=true
-CONFIGURE_SALT=true
