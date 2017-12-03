@@ -9,7 +9,6 @@
 if [ "$ENABLE_SALT" = true ] ; then
   mkdir -p "${ETC_DIR}/apt/sources.list.d"
   printf "deb http://repo.saltstack.com/apt/debian/8/armhf/${SALT_VERSION} jessie main" >> "${ETC_DIR}/apt/sources.list.d/saltstack.list"
-
   wget -O - "https://repo.saltstack.com/apt/debian/8/armhf/${SALT_VERSION}/SALTSTACK-GPG-KEY.pub" | chroot_exec apt-key add -
 
   chroot_exec apt-get -qq -y update
@@ -17,8 +16,10 @@ if [ "$ENABLE_SALT" = true ] ; then
 
   # Configure Salt minion
   if [ "$CONFIGURE_SALT" = true ] ; then
-    printf "id: ${SALT_MINION}" >> "${ETC_DIR}/salt/minion.d/minion.conf"
-    printf "\nmaster: ${SALT_MASTER}" >> "${ETC_DIR}/salt/minion.d/minion.conf"
+    printf "master: ${SALT_MASTER}" >> "${ETC_DIR}/salt/minion.d/minion.conf"
+    if [ "$SALT_MINION" != '' ] ; then
+      printf "\nid: ${SALT_MINION}" >> "${ETC_DIR}/salt/minion.d/minion.conf"
+    fi
   fi
 
   # Preseed Salt minion keys
