@@ -460,7 +460,7 @@ fi
 
 # Add xorg package
 if [ "$ENABLE_XORG" = true ] ; then
-  APT_INCLUDES="${APT_INCLUDES},xorg"
+  APT_INCLUDES="${APT_INCLUDES},xorg,dbus-x11"
 fi
 
 # Replace selected packages with smaller clones
