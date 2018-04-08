@@ -25,8 +25,14 @@ if [ "$ENABLE_SALT" = true ] ; then
   # Preseed Salt minion keys
   if [ "$PRESEED_SALT" = true ] ; then
     mkdir -p "${ETC_DIR}/salt/pki/minion"
-    printf "${SALT_PUB_KEY}" >> "${ETC_DIR}/salt/pki/minion/minion.pub"
-    printf "${SALT_PRIV_KEY}" >> "${ETC_DIR}/salt/pki/minion/minion.pem"
+    echo "${SALT_PUB_KEY}" >> "${ETC_DIR}/salt/pki/minion/minion.pub"
+    echo "${SALT_PRIV_KEY}" >> "${ETC_DIR}/salt/pki/minion/minion.pem"
+  fi
+
+  # Apply Salt states
+  if [ "$APPLY_SALT" = true ] ; then
+    chroot_exec salt-call saltutil.sync_all --log-level info
+    chroot_exec salt-call state.apply --log-level info
   fi
 
 fi
