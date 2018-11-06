@@ -32,7 +32,8 @@ if [ "$ENABLE_SALT" = true ] ; then
   # Apply Salt states
   if [ "$APPLY_SALT" = true ] ; then
     chroot_exec salt-call saltutil.sync_all --log-level info
-    chroot_exec salt-call state.apply --log-level info
+    chroot_exec salt-call state.apply state_init --log-level info
+    chroot_exec salt-call state.apply state_main --log-level info
   fi
 
 fi
